@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trends & Talent - Assignment Tracker</title>
+  <link rel="stylesheet" href="trendsandtalents.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Trends & Talent</h1>
+      <p>Assignment Tracker</p>
+    </header>
+
+    <form id="assignment-form" class="input-group">
+      <input type="text" id="assignment-input" placeholder="Enter a new assignment..." required>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <ul id="assignment-list" class="task-list">
+      <!-- Tasks will appear here dynamically -->
+    </ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('assignment-form');
+    const input = document.getElementById('assignment-input');
+    const list = document.getElementById('assignment-list');
+
+    // Add assignment
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const taskText = input.value.trim();
+
+      if (taskText !== '') {
+        const li = document.createElement('li');
+        
+        li.innerHTML = `
+          <span class="task-text">${taskText}</span>
+          <button class="delete-btn">&times;</button>
+        `;
+
+        // Toggle completed status when clicking the task text
+        li.querySelector('.task-text').addEventListener('click', function() {
+          li.classList.toggle('completed');
+        });
+
+        // Delete task when clicking the remove button
+        li.querySelector('.delete-btn').addEventListener('click', function(e) {
+          e.stopPropagation();
+          li.remove();
+        });
+
+        list.appendChild(li);
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
